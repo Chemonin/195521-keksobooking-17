@@ -2,6 +2,10 @@
 
 var HOUSING_TYPE = ['palace', 'flat', 'house', 'bungalo'];
 var AMOUNT = 8;
+var X_MIN = 0;
+var X_MAX = 1200;
+var Y_MIN = 130;
+var Y_MAX = 630;
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -22,8 +26,8 @@ var getAdverts = function (housingType, amount) {
         'type': housingType[getRandomInteger(0, housingType.length)]
       },
       'location': {
-        'x': getRandomInteger(0, 1200),
-        'y': getRandomInteger(130, 630)
+        'x': getRandomInteger(X_MIN, X_MAX),
+        'y': getRandomInteger(Y_MIN, Y_MAX)
       }
     };
   }
@@ -47,7 +51,40 @@ var fillList = function (adverts) {
   map.appendChild(fragment);
 };
 
-var advertList = getAdverts(HOUSING_TYPE, AMOUNT);
-fillList(advertList);
+var noticeForm = document.querySelector('.ad-form');
+var noticeFormHeader = noticeForm.querySelector('.ad-form-header');
+noticeFormHeader.disabled = 'true';
+var noticeFormElements = noticeForm.querySelectorAll('.ad-form__element');
+for (var i = 0; i < noticeFormElements.length; i++) {
+  noticeFormElements[i].disabled = 'true';
+}
 
-map.classList.remove('map--faded');
+var onMainPinClick = function () {
+  var advertList = getAdverts(HOUSING_TYPE, AMOUNT);
+  fillList(advertList);
+
+  noticeForm.classList.remove('ad-form--disabled');
+  map.classList.remove('map--faded');
+  noticeFormHeader.disabled = 'false';
+  for (var i = 0; i < noticeFormElements.length; i++) {
+    noticeFormElements[i].disabled = 'false';
+  }
+  mainPin.removeEventListener('click', onMainPinClick);
+};
+
+var mainPin = document.querySelector('.map__pin--main');
+mainPin.addEventListener('click', onMainPinClick);
+
+var getPinX = function (pin) {
+  return Math.round(pin.offsetLeft + pin.offsetWidth / 2);
+};
+
+var getPinY = function (pin) {
+  return Math.round(pin.offsetTop + pin.offsetHeight / 2);
+};
+
+var noticeFormAddress = noticeForm.querySelector('#address');
+
+mainPin.addEventListener('mouseup', function () {
+  noticeFormAddress.value = getPinX(mainPin) + ', ' + getPinY(mainPin);
+});
