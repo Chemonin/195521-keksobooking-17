@@ -66,7 +66,7 @@ var onMainPinClick = function () {
   noticeForm.classList.remove('ad-form--disabled');
   map.classList.remove('map--faded');
   noticeFormHeader.disabled = 'false';
-  for (var i = 0; i < noticeFormElements.length; i++) {
+  for (i = 0; i < noticeFormElements.length; i++) {
     noticeFormElements[i].disabled = 'false';
   }
   mainPin.removeEventListener('click', onMainPinClick);
