@@ -1,9 +1,8 @@
 'use strict';
 
-var HOUSING_TYPE = ['palace', 'flat', 'house', 'bungalo'];
+var HOUSING_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var AMOUNT = 8;
 var X_MIN = 0;
-var X_MAX = 1200;
 var Y_MIN = 130;
 var Y_MAX = 630;
 var map = document.querySelector('.map');
@@ -26,7 +25,7 @@ var getAdverts = function (housingType, amount) {
         'type': housingType[getRandomInteger(0, housingType.length)]
       },
       'location': {
-        'x': getRandomInteger(X_MIN, X_MAX),
+        'x': getRandomInteger(X_MIN, map.offsetWidth),
         'y': getRandomInteger(Y_MIN, Y_MAX)
       }
     };
@@ -51,29 +50,25 @@ var fillList = function (adverts) {
   map.appendChild(fragment);
 };
 
-var noticeForm = document.querySelector('.ad-form');
-var noticeFormHeader = noticeForm.querySelector('.ad-form-header');
-noticeFormHeader.disabled = 'true';
-var noticeFormElements = noticeForm.querySelectorAll('.ad-form__element');
-for (var i = 0; i < noticeFormElements.length; i++) {
-  noticeFormElements[i].disabled = 'true';
-}
-
-var onMainPinClick = function () {
-  var advertList = getAdverts(HOUSING_TYPE, AMOUNT);
-  fillList(advertList);
-
-  noticeForm.classList.remove('ad-form--disabled');
-  map.classList.remove('map--faded');
-  noticeFormHeader.disabled = 'false';
-  for (i = 0; i < noticeFormElements.length; i++) {
-    noticeFormElements[i].disabled = 'false';
+var switchServiceStatus = function (key) {
+  noticeFormAddress.value = getPinX(mainPin) + ', ' + getPinY(mainPin);
+  if (!key) {
+    noticeForm.classList.remove('ad-form--disabled');
+    map.classList.remove('map--faded');
   }
-  mainPin.removeEventListener('click', onMainPinClick);
+  noticeFormHeader.disabled = key;
+  for (var i = 0; i < noticeFormElements.length; i++) {
+    noticeFormElements[i].disabled = key;
+  }
 };
 
-var mainPin = document.querySelector('.map__pin--main');
-mainPin.addEventListener('click', onMainPinClick);
+var onMainPinClick = function () {
+  var advertList = getAdverts(HOUSING_TYPES, AMOUNT);
+  fillList(advertList);
+  flag = false;
+  switchServiceStatus(flag);
+  mainPin.removeEventListener('click', onMainPinClick);
+};
 
 var getPinX = function (pin) {
   return Math.round(pin.offsetLeft + pin.offsetWidth / 2);
@@ -83,8 +78,17 @@ var getPinY = function (pin) {
   return Math.round(pin.offsetTop + pin.offsetHeight / 2);
 };
 
+var noticeForm = document.querySelector('.ad-form');
+var noticeFormHeader = noticeForm.querySelector('.ad-form-header');
+var noticeFormElements = noticeForm.querySelectorAll('.ad-form__element');
+var mainPin = document.querySelector('.map__pin--main');
 var noticeFormAddress = noticeForm.querySelector('#address');
+var flag = true;
+switchServiceStatus(flag);
 
-mainPin.addEventListener('mouseup', function () {
-  noticeFormAddress.value = getPinX(mainPin) + ', ' + getPinY(mainPin);
-});
+
+mainPin.addEventListener('click', onMainPinClick);
+
+// mainPin.addEventListener('mouseup', function () {
+//   noticeFormAddress.value = getPinX(mainPin) + ', ' + getPinY(mainPin);
+// });
