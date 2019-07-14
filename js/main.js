@@ -1,7 +1,10 @@
 'use strict';
 
-var HOUSING_TYPE = ['palace', 'flat', 'house', 'bungalo'];
+var HOUSING_TYPES = ['palace', 'flat', 'house', 'bungalo'];
 var AMOUNT = 8;
+var X_MIN = 0;
+var Y_MIN = 130;
+var Y_MAX = 630;
 var map = document.querySelector('.map');
 var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
 
@@ -22,8 +25,8 @@ var getAdverts = function (housingType, amount) {
         'type': housingType[getRandomInteger(0, housingType.length)]
       },
       'location': {
-        'x': getRandomInteger(0, 1200),
-        'y': getRandomInteger(130, 630)
+        'x': getRandomInteger(X_MIN, map.offsetWidth),
+        'y': getRandomInteger(Y_MIN, Y_MAX)
       }
     };
   }
@@ -47,7 +50,45 @@ var fillList = function (adverts) {
   map.appendChild(fragment);
 };
 
-var advertList = getAdverts(HOUSING_TYPE, AMOUNT);
-fillList(advertList);
+var switchServiceStatus = function (key) {
+  noticeFormAddress.value = getPinX(mainPin) + ', ' + getPinY(mainPin);
+  if (!key) {
+    noticeForm.classList.remove('ad-form--disabled');
+    map.classList.remove('map--faded');
+  }
+  noticeFormHeader.disabled = key;
+  for (var i = 0; i < noticeFormElements.length; i++) {
+    noticeFormElements[i].disabled = key;
+  }
+};
 
-map.classList.remove('map--faded');
+var onMainPinClick = function () {
+  var advertList = getAdverts(HOUSING_TYPES, AMOUNT);
+  fillList(advertList);
+  flag = false;
+  switchServiceStatus(flag);
+  mainPin.removeEventListener('click', onMainPinClick);
+};
+
+var getPinX = function (pin) {
+  return Math.round(pin.offsetLeft + pin.offsetWidth / 2);
+};
+
+var getPinY = function (pin) {
+  return Math.round(pin.offsetTop + pin.offsetHeight / 2);
+};
+
+var noticeForm = document.querySelector('.ad-form');
+var noticeFormHeader = noticeForm.querySelector('.ad-form-header');
+var noticeFormElements = noticeForm.querySelectorAll('.ad-form__element');
+var mainPin = document.querySelector('.map__pin--main');
+var noticeFormAddress = noticeForm.querySelector('#address');
+var flag = true;
+switchServiceStatus(flag);
+
+
+mainPin.addEventListener('click', onMainPinClick);
+
+// mainPin.addEventListener('mouseup', function () {
+//   noticeFormAddress.value = getPinX(mainPin) + ', ' + getPinY(mainPin);
+// });
