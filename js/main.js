@@ -1,6 +1,12 @@
 'use strict';
 
 var HOUSING_TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var MIN_PRICE = {
+  'palace': 10000,
+  'flat': 1000,
+  'house': 5000,
+  'bungalo': 0
+};
 var AMOUNT = 8;
 var X_MIN = 0;
 var Y_MIN = 130;
@@ -92,19 +98,8 @@ mainPin.addEventListener('click', onMainPinClick);
 var typeOfHouse = noticeForm.querySelector('#type');
 var priceForNight = noticeForm.querySelector('#price');
 
-var setMinPrice = function (houseType) {
-  var value = houseType;
-  var minPrice = {
-    'palace': 10000,
-    'flat': 1000,
-    'house': 5000,
-    'bungalo': 0
-  };
-  return minPrice[value];
-};
-
 typeOfHouse.addEventListener('change', function () {
-  priceForNight.min = setMinPrice(typeOfHouse.value);
+  priceForNight.min = MIN_PRICE[typeOfHouse.value];
   priceForNight.placeholder = priceForNight.min;
 });
 
@@ -112,10 +107,8 @@ var checkin = noticeForm.querySelector('#timein');
 var checkout = noticeForm.querySelector('#timeout');
 var timeCheck = noticeForm.querySelector('.ad-form__element--time');
 var onTimeCheckChange = function (evt) {
-  if (evt.target === checkin || evt.target === checkout) {
-    checkout.value = evt.target.value;
-    checkin.value = evt.target.value;
-  }
+  checkout.value = evt.target.value;
+  checkin.value = evt.target.value;
 };
 
 timeCheck.addEventListener('change', onTimeCheckChange);
