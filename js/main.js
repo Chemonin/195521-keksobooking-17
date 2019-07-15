@@ -14,7 +14,7 @@ var getRandomInteger = function (min, max) {
   return rand;
 };
 
-var getAdverts = function (housingType, amount) {
+var getAdverts = function (houseType, amount) {
   var adverts = [];
   for (var i = 0; i < amount; i++) {
     adverts[i] = {
@@ -22,7 +22,7 @@ var getAdverts = function (housingType, amount) {
         'avatar': 'img/avatars/user0' + (i + 1) + '.png'
       },
       'offer': {
-        'type': housingType[getRandomInteger(0, housingType.length)]
+        'type': houseType[getRandomInteger(0, houseType.length)]
       },
       'location': {
         'x': getRandomInteger(X_MIN, map.offsetWidth),
@@ -89,6 +89,33 @@ switchServiceStatus(flag);
 
 mainPin.addEventListener('click', onMainPinClick);
 
-// mainPin.addEventListener('mouseup', function () {
-//   noticeFormAddress.value = getPinX(mainPin) + ', ' + getPinY(mainPin);
-// });
+var typeOfHouse = noticeForm.querySelector('#type');
+var priceForNight = noticeForm.querySelector('#price');
+
+var setMinPrice = function (houseType) {
+  var value = houseType;
+  var minPrice = {
+    'palace': 10000,
+    'flat': 1000,
+    'house': 5000,
+    'bungalo': 0
+  };
+  return minPrice[value];
+};
+
+typeOfHouse.addEventListener('change', function () {
+  priceForNight.min = setMinPrice(typeOfHouse.value);
+  priceForNight.placeholder = priceForNight.min;
+});
+
+var checkin = noticeForm.querySelector('#timein');
+var checkout = noticeForm.querySelector('#timeout');
+var timeCheck = noticeForm.querySelector('.ad-form__element--time');
+var onTimeCheckChange = function (evt) {
+  if (evt.target === checkin || evt.target === checkout) {
+    checkout.value = evt.target.value;
+    checkin.value = evt.target.value;
+  }
+};
+
+timeCheck.addEventListener('change', onTimeCheckChange);
