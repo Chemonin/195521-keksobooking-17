@@ -91,13 +91,16 @@ var mainPin = document.querySelector('.map__pin--main');
 var noticeFormAddress = noticeForm.querySelector('#address');
 var flag = true;
 switchServiceStatus(flag);
-
+flag = false;
 
 // mainPin.addEventListener('click', onMainPinClick);
 mainPin.addEventListener('mousedown', function (evt) {
   evt.preventDefault();
-  flag = false;
-  switchServiceStatus(flag);
+  if (!flag) {
+    var advertList = getAdverts(HOUSING_TYPES, AMOUNT);
+    fillList(advertList);
+    switchServiceStatus(flag);
+  }
 
   var startCords = {
     x: evt.offsetLeft,
@@ -123,7 +126,7 @@ mainPin.addEventListener('mousedown', function (evt) {
 
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
-
+    flag = true;
     map.removeEventListener('mousemove', onMouesMove);
     document.removeEventListener('mouseup', onMouseUp);
   };
