@@ -7,6 +7,7 @@ var MIN_PRICE = {
   'house': 5000,
   'bungalo': 0
 };
+var PIN_NIIDLE_HEIGHT = 16;
 var AMOUNT = 8;
 var X_MIN = 0;
 var Y_MIN = 130;
@@ -97,7 +98,7 @@ mainPin.addEventListener('mousedown', function (evt) {
     x: evt.offsetLeft,
     y: evt.offsetTop
   };
-
+  mainPin.style.border = '2px solid red';
   var onMouesMove = function (moveEvt) {
     moveEvt.preventDefault();
 
@@ -114,7 +115,7 @@ mainPin.addEventListener('mousedown', function (evt) {
     mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
     mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
 
-    noticeFormAddress.value = getPinX(mainPin) + ', ' + (getPinY(mainPin) + Math.round(mainPin.offsetHeight / 2));
+    noticeFormAddress.value = getPinX(mainPin) + ', ' + (getPinY(mainPin) + Math.round(mainPin.offsetHeight / 2 + PIN_NIIDLE_HEIGHT));
   };
 
   var onMouseUp = function (upEvt) {
@@ -133,7 +134,7 @@ mainPin.addEventListener('mousedown', function (evt) {
       mainPin.style.left = mainPin.parentElement.offsetWidth - (mainPin.offsetWidth / 2) + 'px';
     }
 
-    noticeFormAddress.value = getPinX(mainPin) + ', ' + (getPinY(mainPin) + Math.round(mainPin.offsetHeight / 2));
+    noticeFormAddress.value = getPinX(mainPin) + ', ' + (getPinY(mainPin) + Math.round(mainPin.offsetHeight / 2 + PIN_NIIDLE_HEIGHT));
     map.removeEventListener('mousemove', onMouesMove);
     document.removeEventListener('mouseup', onMouseUp);
   };
