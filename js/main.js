@@ -98,7 +98,6 @@ mainPin.addEventListener('mousedown', function (evt) {
     x: evt.offsetLeft,
     y: evt.offsetTop
   };
-  mainPin.style.border = '2px solid red';
   var onMouesMove = function (moveEvt) {
     moveEvt.preventDefault();
 
@@ -121,8 +120,8 @@ mainPin.addEventListener('mousedown', function (evt) {
   var onMouseUp = function (upEvt) {
     upEvt.preventDefault();
     flag = true;
-    if (mainPin.offsetTop < Y_MIN - mainPin.offsetHeight / 2) {
-      mainPin.style.top = Y_MIN - mainPin.offsetHeight / 2 + 'px';
+    if (mainPin.offsetTop < Y_MIN) {
+      mainPin.style.top = Y_MIN + 'px';
     }
     if (mainPin.offsetTop > Y_MAX) {
       mainPin.style.top = Y_MAX + 'px';
@@ -130,8 +129,8 @@ mainPin.addEventListener('mousedown', function (evt) {
     if (mainPin.offsetLeft < -(mainPin.offsetWidth / 2)) {
       mainPin.style.left = -(mainPin.offsetWidth / 2) + 'px';
     }
-    if (mainPin.offsetLeft > mainPin.parentElement.offsetWidth - (mainPin.offsetWidth / 2)) {
-      mainPin.style.left = mainPin.parentElement.offsetWidth - (mainPin.offsetWidth / 2) + 'px';
+    if (mainPin.offsetLeft > mainPin.parentElement.clientWidth - (mainPin.offsetWidth / 2)) {
+      mainPin.style.left = mainPin.parentElement.clientWidth - (mainPin.offsetWidth / 2) + 'px';
     }
 
     noticeFormAddress.value = getPinX(mainPin) + ', ' + (getPinY(mainPin) + Math.round(mainPin.offsetHeight / 2 + PIN_NIIDLE_HEIGHT));
