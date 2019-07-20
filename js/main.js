@@ -1,6 +1,13 @@
 'use strict';
 
 var HOUSING_TYPES = ['palace', 'flat', 'house', 'bungalo'];
+var MIN_PRICE = {
+  'palace': 10000,
+  'flat': 1000,
+  'house': 5000,
+  'bungalo': 0
+};
+var PIN_NIIDLE_HEIGHT = 16;
 var AMOUNT = 8;
 var X_MIN = 0;
 var Y_MIN = 130;
@@ -62,14 +69,6 @@ var switchServiceStatus = function (key) {
   }
 };
 
-var onMainPinClick = function () {
-  var advertList = getAdverts(HOUSING_TYPES, AMOUNT);
-  fillList(advertList);
-  flag = false;
-  switchServiceStatus(flag);
-  mainPin.removeEventListener('click', onMainPinClick);
-};
-
 var getPinX = function (pin) {
   return Math.round(pin.offsetLeft + pin.offsetWidth / 2);
 };
@@ -85,26 +84,69 @@ var mainPin = document.querySelector('.map__pin--main');
 var noticeFormAddress = noticeForm.querySelector('#address');
 var flag = true;
 switchServiceStatus(flag);
+flag = false;
 
+mainPin.addEventListener('mousedown', function (evt) {
+  evt.preventDefault();
 
-mainPin.addEventListener('click', onMainPinClick);
+  if (!flag) {
+    var advertList = getAdverts(HOUSING_TYPES, AMOUNT);
+    fillList(advertList);
+    switchServiceStatus(flag);
+  }
+  var startCords = {
+    x: evt.offsetLeft,
+    y: evt.offsetTop
+  };
+  var onMouesMove = function (moveEvt) {
+    moveEvt.preventDefault();
+
+    var shift = {
+      x: startCords.x - moveEvt.clientX,
+      y: startCords.y - moveEvt.clientY
+    };
+
+    startCords = {
+      x: moveEvt.clientX,
+      y: moveEvt.clientY
+    };
+
+    mainPin.style.top = (mainPin.offsetTop - shift.y) + 'px';
+    mainPin.style.left = (mainPin.offsetLeft - shift.x) + 'px';
+
+    noticeFormAddress.value = getPinX(mainPin) + ', ' + (getPinY(mainPin) + Math.round(mainPin.offsetHeight / 2 + PIN_NIIDLE_HEIGHT));
+  };
+
+  var onMouseUp = function (upEvt) {
+    upEvt.preventDefault();
+    flag = true;
+    if (mainPin.offsetTop < Y_MIN) {
+      mainPin.style.top = Y_MIN + 'px';
+    }
+    if (mainPin.offsetTop > Y_MAX) {
+      mainPin.style.top = Y_MAX + 'px';
+    }
+    if (mainPin.offsetLeft < -(mainPin.offsetWidth / 2)) {
+      mainPin.style.left = -(mainPin.offsetWidth / 2) + 'px';
+    }
+    if (mainPin.offsetLeft > mainPin.parentElement.clientWidth - (mainPin.offsetWidth / 2)) {
+      mainPin.style.left = mainPin.parentElement.clientWidth - (mainPin.offsetWidth / 2) + 'px';
+    }
+
+    noticeFormAddress.value = getPinX(mainPin) + ', ' + (getPinY(mainPin) + Math.round(mainPin.offsetHeight / 2 + PIN_NIIDLE_HEIGHT));
+    map.removeEventListener('mousemove', onMouesMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  };
+
+  map.addEventListener('mousemove', onMouesMove);
+  document.addEventListener('mouseup', onMouseUp);
+});
 
 var typeOfHouse = noticeForm.querySelector('#type');
 var priceForNight = noticeForm.querySelector('#price');
 
-var setMinPrice = function (houseType) {
-  var value = houseType;
-  var minPrice = {
-    'palace': 10000,
-    'flat': 1000,
-    'house': 5000,
-    'bungalo': 0
-  };
-  return minPrice[value];
-};
-
 typeOfHouse.addEventListener('change', function () {
-  priceForNight.min = setMinPrice(typeOfHouse.value);
+  priceForNight.min = MIN_PRICE[typeOfHouse.value];
   priceForNight.placeholder = priceForNight.min;
 });
 
@@ -112,10 +154,8 @@ var checkin = noticeForm.querySelector('#timein');
 var checkout = noticeForm.querySelector('#timeout');
 var timeCheck = noticeForm.querySelector('.ad-form__element--time');
 var onTimeCheckChange = function (evt) {
-  if (evt.target === checkin || evt.target === checkout) {
-    checkout.value = evt.target.value;
-    checkin.value = evt.target.value;
-  }
+  checkout.value = evt.target.value;
+  checkin.value = evt.target.value;
 };
 
 timeCheck.addEventListener('change', onTimeCheckChange);
