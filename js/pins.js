@@ -2,6 +2,8 @@
 
 (function () {
   var HOUSING_TYPES = ['palace', 'flat', 'house', 'bungalo'];
+  var PIN_WIDTH = 50;
+  var PIN_HEIGTH = 70;
   var AMOUNT = 8;
   var X_MIN = 0;
   var Y_MIN = 130;
@@ -35,21 +37,21 @@
   };
   var renderPin = function (advert) {
     var advertPin = pinTemplate.cloneNode(true);
-    advertPin.style.left = advert.location.x + 'px';
-    advertPin.style.top = advert.location.y + 'px';
+    advertPin.style.left = advert.location.x - PIN_WIDTH / 2 + 'px';
+    advertPin.style.top = advert.location.y - PIN_HEIGTH + 'px';
     advertPin.querySelector('img').src = advert.author.avatar;
     advertPin.alt = 'Заголовок объявления';
     return advertPin;
   };
 
   window.pins = {
-    fillList: function (object) {
+    fillList: function (mapSpace) {
       var list = getAdverts(HOUSING_TYPES, AMOUNT);
       var fragment = document.createDocumentFragment();
       for (var i = 0; i < list.length; i++) {
         fragment.appendChild(renderPin(list[i]));
       }
-      object.appendChild(fragment);
+      mapSpace.appendChild(fragment);
     },
     checkBorder: function (pin) {
       if (pin.offsetTop < Y_MIN) {
