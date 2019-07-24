@@ -2,7 +2,6 @@
 
 (function () {
   var PIN_NIIDLE_HEIGHT = 16;
-  var ESC_KEYCODE = 27;
 
   var map = document.querySelector('.map');
   var mainPin = document.querySelector('.map__pin--main');
@@ -10,29 +9,6 @@
   var noticeFormHeader = noticeForm.querySelector('.ad-form-header');
   var noticeFormElements = noticeForm.querySelectorAll('.ad-form__element');
   var noticeFormAddress = noticeForm.querySelector('#address');
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
-  var errorHandler = function () {
-    var errorMessage = errorTemplate.cloneNode(true);
-    var errorBtn = errorMessage.querySelector('.error__button');
-    var application = document.querySelector('main');
-    var onDocumentKeydown = function (evt) {
-      if (evt.keyCode === ESC_KEYCODE) {
-        closeErrorMessage();
-      }
-    };
-
-    var closeErrorMessage = function () {
-      application.removeChild(errorMessage);
-      document.removeEventListener('keydown', onDocumentKeydown);
-      document.removeEventListener('click', closeErrorMessage);
-    };
-
-    document.addEventListener('keydown', closeErrorMessage);
-    document.addEventListener('click', closeErrorMessage);
-    errorBtn.addEventListener('click', closeErrorMessage);
-    application.appendChild(errorMessage);
-  };
 
   var getPinX = function (pin) {
     return Math.round(pin.offsetLeft + pin.offsetWidth / 2);
@@ -61,7 +37,7 @@
     evt.preventDefault();
 
     if (!flag) {
-      window.download(window.pins.fillList, errorHandler);
+      window.download(window.pins.fillList, window.onDownloadError);
       switchServiceStatus(flag);
     }
     var startCords = {
