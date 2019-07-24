@@ -20,7 +20,7 @@
     };
     var errorBtn = errorTemplate.querySelector('.error__button');
 
-    document.addEventListener('keydown', closeErrorMessage);
+    document.addEventListener('keydown', onDocumentKeydown);
     document.addEventListener('click', closeErrorMessage);
     errorBtn.addEventListener('click', closeErrorMessage);
     application.appendChild(errorMessage);
