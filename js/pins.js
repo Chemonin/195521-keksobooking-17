@@ -1,40 +1,33 @@
 'use strict';
 
 (function () {
-  var HOUSING_TYPES = ['palace', 'flat', 'house', 'bungalo'];
   var PIN_WIDTH = 50;
   var PIN_HEIGTH = 70;
-  var AMOUNT = 8;
-  var X_MIN = 0;
   var Y_MIN = 130;
   var Y_MAX = 630;
 
-  var map = document.querySelector('.map');
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
+  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
-  var getRandomInteger = function (min, max) {
-    var rand = min - 0.5 + Math.random() * (max - min + 1);
-    rand = Math.round(rand);
-    return rand;
+  var errorHandler = function () {
+    var errorMessage = errorTemplate.cloneNode(true);
+    var errorBtn = errorMessage.querySelector('.error__button');
+    errorBtn.addEventListener('click', function () {
+      window.location.reload();
+    });
+    document.body.appendChild(errorMessage);
   };
-  var getAdverts = function (houseType, amount) {
-    var adverts = [];
-    for (var i = 0; i < amount; i++) {
-      adverts[i] = {
-        'author': {
-          'avatar': 'img/avatars/user0' + (i + 1) + '.png'
-        },
-        'offer': {
-          'type': houseType[getRandomInteger(0, houseType.length)]
-        },
-        'location': {
-          'x': getRandomInteger(X_MIN, map.offsetWidth),
-          'y': getRandomInteger(Y_MIN, Y_MAX)
-        }
-      };
+
+  var adverts = [];
+
+  var getAdverts = function (advertData) {
+    for (var i = 0; i < advertData.length; i++) {
+      adverts[i] = advertData[i];
     }
-    return adverts;
   };
+
+  window.download(getAdverts, errorHandler);
+
   var renderPin = function (advert) {
     var advertPin = pinTemplate.cloneNode(true);
     advertPin.style.left = advert.location.x - PIN_WIDTH / 2 + 'px';
@@ -46,10 +39,9 @@
 
   window.pins = {
     fillList: function (mapSpace) {
-      var list = getAdverts(HOUSING_TYPES, AMOUNT);
       var fragment = document.createDocumentFragment();
-      for (var i = 0; i < list.length; i++) {
-        fragment.appendChild(renderPin(list[i]));
+      for (var i = 0; i < adverts.length; i++) {
+        fragment.appendChild(renderPin(adverts[i]));
       }
       mapSpace.appendChild(fragment);
     },
