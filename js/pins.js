@@ -7,26 +7,7 @@
   var Y_MAX = 630;
 
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
-  var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-
-  var errorHandler = function () {
-    var errorMessage = errorTemplate.cloneNode(true);
-    var errorBtn = errorMessage.querySelector('.error__button');
-    errorBtn.addEventListener('click', function () {
-      window.location.reload();
-    });
-    document.body.appendChild(errorMessage);
-  };
-
-  var adverts = [];
-
-  var getAdverts = function (advertData) {
-    for (var i = 0; i < advertData.length; i++) {
-      adverts[i] = advertData[i];
-    }
-  };
-
-  window.download(getAdverts, errorHandler);
+  var map = document.querySelector('.map');
 
   var renderPin = function (advert) {
     var advertPin = pinTemplate.cloneNode(true);
@@ -38,12 +19,12 @@
   };
 
   window.pins = {
-    fillList: function (mapSpace) {
+    fillList: function (pinList) {
       var fragment = document.createDocumentFragment();
-      for (var i = 0; i < adverts.length; i++) {
-        fragment.appendChild(renderPin(adverts[i]));
+      for (var i = 0; i < pinList.length; i++) {
+        fragment.appendChild(renderPin(pinList[i]));
       }
-      mapSpace.appendChild(fragment);
+      map.appendChild(fragment);
     },
     checkBorder: function (pin) {
       if (pin.offsetTop < Y_MIN) {

@@ -1,7 +1,8 @@
 'use strict';
 
 (function () {
-  var URL = 'https://js.dump.academy/eksobooking/data';
+  var TIMEOUT_VALUE = 10000;
+  var URL = 'https://js.dump.academy/keksobooking/data';
   window.download = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
@@ -19,7 +20,7 @@
       onError();
     });
 
-    xhr.timeout = 10000;
+    xhr.timeout = TIMEOUT_VALUE;
 
     xhr.open('GET', URL);
     xhr.send();
