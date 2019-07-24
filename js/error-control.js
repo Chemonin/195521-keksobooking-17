@@ -10,19 +10,19 @@
     var errorMessage = errorTemplate.cloneNode(true);
     var onDocumentKeydown = function (evt) {
       if (evt.keyCode === ESC_KEYCODE) {
-        closeErrorMessage();
+        onErrorClose();
       }
     };
-    var closeErrorMessage = function () {
+    var onErrorClose = function () {
       application.removeChild(errorMessage);
       document.removeEventListener('keydown', onDocumentKeydown);
-      document.removeEventListener('click', closeErrorMessage);
+      document.removeEventListener('click', onErrorClose);
     };
     var errorBtn = errorTemplate.querySelector('.error__button');
 
     document.addEventListener('keydown', onDocumentKeydown);
-    document.addEventListener('click', closeErrorMessage);
-    errorBtn.addEventListener('click', closeErrorMessage);
+    document.addEventListener('click', onErrorClose);
+    errorBtn.addEventListener('click', onErrorClose);
     application.appendChild(errorMessage);
   };
 })();
