@@ -37,7 +37,7 @@
     evt.preventDefault();
 
     if (!flag) {
-      window.pins.fillList(map);
+      window.download(window.pins.fillList, window.onDownloadError);
       switchServiceStatus(flag);
     }
     var startCords = {
