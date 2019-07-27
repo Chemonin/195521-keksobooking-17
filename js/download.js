@@ -3,6 +3,7 @@
 (function () {
   var TIMEOUT_VALUE = 10000;
   var URL = 'https://js.dump.academy/keksobooking/data';
+
   window.download = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
