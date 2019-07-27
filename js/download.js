@@ -3,12 +3,15 @@
 (function () {
   var TIMEOUT_VALUE = 10000;
   var URL = 'https://js.dump.academy/keksobooking/data';
+  var LoadStatus = {
+    OK: 200
+  };
 
   window.download = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = 'json';
     xhr.addEventListener('load', function () {
-      if (xhr.status === 200) {
+      if (xhr.status === LoadStatus.OK) {
         onSuccess(xhr.response);
       } else {
         onError();
