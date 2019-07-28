@@ -8,6 +8,8 @@
 
   var pinTemplate = document.querySelector('#pin').content.querySelector('.map__pin');
   var map = document.querySelector('.map');
+  var pins = map.querySelector('.map__pins');
+  var typeOfHouse = document.querySelector('#housing-type');
 
   var renderPin = function (advert) {
     var advertPin = pinTemplate.cloneNode(true);
@@ -17,14 +19,29 @@
     advertPin.alt = 'Заголовок объявления';
     return advertPin;
   };
+  var pinsData = [];
+  var counter;
+  var updatePins = function () {
+    var renderList = window.filterPins(pinsData);
+    var fragment = document.createDocumentFragment();
+    for (var i = 0; i < renderList.length; i++) {
+      fragment.appendChild(renderPin(renderList[i]));
+    }
+    counter = i;
+    pins.appendChild(fragment);
+    typeOfHouse.addEventListener('change', onTypeOfHouseCheck);
+  };
+  var onTypeOfHouseCheck = function () {
+    for (var i = 0; i < counter; i++) {
+      pins.removeChild(pins.lastChild);
+    }
+    updatePins();
+  };
 
   window.pins = {
-    fillList: function (pinList) {
-      var fragment = document.createDocumentFragment();
-      for (var i = 0; i < pinList.length; i++) {
-        fragment.appendChild(renderPin(pinList[i]));
-      }
-      map.appendChild(fragment);
+    render: function (data) {
+      pinsData = data;
+      updatePins();
     },
     checkBorder: function (pin) {
       if (pin.offsetTop < Y_MIN) {
