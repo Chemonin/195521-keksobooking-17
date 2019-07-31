@@ -1,20 +1,17 @@
 'use strict';
 
 (function () {
-  var typeOfHouse = document.querySelector('#housing-type');
   var ANY_HOUSE = 'any';
   var Range = {
     SLICE_START: 0,
     SLICE_END: 5
   };
+  var typeOfHouse = document.querySelector('#housing-type');
 
   var selectedByType = function (advertsData) {
     var selectedData = advertsData.filter(function (it) {
-      return it.offer.type === typeOfHouse.value;
+      return it.offer.type === typeOfHouse.value || typeOfHouse.value === ANY_HOUSE;
     });
-    if (selectedData.length === 0 && typeOfHouse.value === ANY_HOUSE) {
-      selectedData = advertsData;
-    }
     return selectedData;
   };
 
