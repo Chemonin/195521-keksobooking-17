@@ -14,13 +14,16 @@
       if (xhr.status === LoadStatus.OK) {
         onSuccess(xhr.response);
       } else {
+        window.alert('first');
         onError();
       }
     });
     xhr.addEventListener('error', function () {
+      window.alert('second');
       onError();
     });
     xhr.addEventListener('timeout', function () {
+      window.alert('third');
       onError();
     });
 

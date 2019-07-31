@@ -42,7 +42,7 @@
     render: function (data) {
       pinsData = data;
       updatePins();
-      window.renderCard(pinsData);
+      window.renderCard(pinsData[0]);
       typeOfHouse.addEventListener('change', onTypeOfHouseChange);
     },
     checkBorder: function (pin) {

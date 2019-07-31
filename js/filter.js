@@ -10,11 +10,7 @@
 
   var selectedByType = function (advertsData) {
     var selectedData = advertsData.filter(function (it) {
-      var filterStatus = false;
-      if (it.offer.type === typeOfHouse.value || typeOfHouse.value === ANY_HOUSE) {
-        filterStatus = true;
-      }
-      return filterStatus;
+      return it.offer.type === typeOfHouse.value || typeOfHouse.value === ANY_HOUSE;
     });
     return selectedData;
   };
