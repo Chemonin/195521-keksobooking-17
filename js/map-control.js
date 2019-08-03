@@ -38,7 +38,6 @@
 
     if (!flag) {
       window.download(window.pins.render, window.onDownloadError);
-      // window.download(window.pins.render);
       switchServiceStatus(flag);
     }
     var startCords = {

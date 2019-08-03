@@ -17,6 +17,10 @@
     advertPin.style.top = advert.location.y - PIN_HEIGTH + 'px';
     advertPin.querySelector('img').src = advert.author.avatar;
     advertPin.alt = 'Заголовок объявления';
+    advertPin.addEventListener('click', function () {
+      // debugger;
+      window.renderCard(advert);
+    });
     return advertPin;
   };
   var pinsData = [];
@@ -41,7 +45,6 @@
     render: function (data) {
       pinsData = data;
       updatePins();
-      window.renderCard(pinsData[0]);
       mapFilter.addEventListener('change', onMapFilterChange);
     },
     checkBorder: function (pin) {
