@@ -10,6 +10,7 @@
   var map = document.querySelector('.map');
   var pins = map.querySelector('.map__pins');
   var typeOfHouse = document.querySelector('#housing-type');
+  var mapFilter = document.querySelector('.map__filters');
 
   var renderPin = function (advert) {
     var advertPin = pinTemplate.cloneNode(true);
@@ -22,6 +23,7 @@
   var pinsData = [];
   var counter;
   var updatePins = function () {
+    // debugger;
     var renderList = window.filterPins(pinsData);
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < renderList.length; i++) {
@@ -31,10 +33,11 @@
     pins.appendChild(fragment);
     // debugger;
   };
-  var onTypeOfHouseChange = function () {
+  var onMapFilterChange = function () {
     for (var i = 0; i < counter; i++) {
       pins.removeChild(pins.lastChild);
     }
+    // debugger;
     updatePins();
   };
 
@@ -43,7 +46,7 @@
       pinsData = data;
       updatePins();
       window.renderCard(pinsData[0]);
-      typeOfHouse.addEventListener('change', onTypeOfHouseChange);
+      mapFilter.addEventListener('change', onMapFilterChange);
     },
     checkBorder: function (pin) {
       if (pin.offsetTop < Y_MIN) {
