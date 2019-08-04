@@ -35,6 +35,7 @@
     pins.appendChild(fragment);
   };
   var onMapFilterChange = function () {
+    window.removeCard();
     for (var i = 0; i < counter; i++) {
       pins.removeChild(pins.lastChild);
     }
