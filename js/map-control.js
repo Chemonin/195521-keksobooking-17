@@ -6,9 +6,10 @@
   var map = document.querySelector('.map');
   var mainPin = document.querySelector('.map__pin--main');
   var noticeForm = document.querySelector('.ad-form');
-  var noticeFormHeader = noticeForm.querySelector('.ad-form-header');
-  var noticeFormElements = noticeForm.querySelectorAll('.ad-form__element');
+  // var noticeFormHeader = noticeForm.querySelector('.ad-form-header');
+  // var noticeFormElements = noticeForm.querySelectorAll('.ad-form__element');
   var noticeFormAddress = noticeForm.querySelector('#address');
+  // var startState = {};
 
   var getPinX = function (pin) {
     return Math.round(pin.offsetLeft + pin.offsetWidth / 2);
@@ -18,28 +19,32 @@
     return Math.round(pin.offsetTop + pin.offsetHeight / 2);
   };
 
-  var switchServiceStatus = function (key) {
-    noticeFormAddress.value = getPinX(mainPin) + ', ' + getPinY(mainPin);
-    if (!key) {
-      noticeForm.classList.remove('ad-form--disabled');
-      map.classList.remove('map--faded');
-    }
-    noticeFormHeader.disabled = key;
-    for (var i = 0; i < noticeFormElements.length; i++) {
-      noticeFormElements[i].disabled = key;
-    }
-  };
+  // window.switchServiceStatus = function (key) {
+  //   noticeFormAddress.value = getPinX(mainPin) + ', ' + getPinY(mainPin);
+  //   startState.noticeAddress = noticeFormAddress.value;
+  //   startState.pinY = mainPin.offsetTop;
+  //   startState.pinX = mainPin.offsetTop;
+  //   if (!key) {
+  //     noticeForm.classList.remove('ad-form--disabled');
+  //     map.classList.remove('map--faded');
+  //   }
+  //   noticeFormHeader.disabled = key;
+  //   for (var i = 0; i < noticeFormElements.length; i++) {
+  //     noticeFormElements[i].disabled = key;
+  //   }
+  // };
 
-  var flag = true;
-  switchServiceStatus(flag);
-  flag = false;
+  // var flag = true;
+  // window.switchServiceStatus(flag);
+  window.resetService();
+  // flag = false;
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
-
-    if (!flag) {
-      window.download(window.pins.render, window.onDownloadError);
-      switchServiceStatus(flag);
-    }
+    window.activateService();
+    // if (!flag) {
+    //   window.download(window.pins.render, window.onDownloadError);
+    //   window.switchServiceStatus(flag);
+    // }
     var startCords = {
       x: evt.offsetLeft,
       y: evt.offsetTop
@@ -66,7 +71,7 @@
 
     var onMouseUp = function (upEvt) {
       upEvt.preventDefault();
-      flag = true;
+      // flag = true;
 
       noticeFormAddress.value = getPinX(mainPin) + ', ' + (getPinY(mainPin) + Math.round(mainPin.offsetHeight / 2 + PIN_NIIDLE_HEIGHT));
       map.removeEventListener('mousemove', onMouesMove);

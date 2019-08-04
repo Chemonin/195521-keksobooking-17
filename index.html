@@ -143,10 +143,10 @@
         </fieldset>
         <fieldset class="ad-form__element">
           <label class="ad-form__label" for="capacity">Количество мест</label>
-          <select id="capacity" name="capacity">
-            <option value="3" selected>для 3 гостей</option>
+          <select id="capacity" name="capacity" patern = "[0-1]">
+            <option value="3">для 3 гостей</option>
             <option value="2">для 2 гостей</option>
-            <option value="1">для 1 гостя</option>
+            <option value="1" selected>для 1 гостя</option>
             <option value="0">не для гостей</option>
           </select>
         </fieldset>
@@ -247,6 +247,8 @@
       <button class="error__button" href="#">Попробовать снова</button>
     </div>
   </template>
+  <script src="js/status.js"></script>
+  <script src="js/util.js"></script>
   <script src="js/filter.js"></script>
   <script src="js/download.js"></script>
   <script src="js/cards.js"></script>
