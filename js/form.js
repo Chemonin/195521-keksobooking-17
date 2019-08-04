@@ -20,12 +20,10 @@
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
   priceForNight.min = MIN_PRICE.flat;
-  var submit = document.querySelector('.ad-form__submit');
   var form = document.querySelector('.ad-form');
 
   form.addEventListener('change', function (evt) {
     if (evt.target === roomNumber || evt.target === capacity) {
-      // debugger;
       if (roomNumber.value === PlacementValue.ONE_ELEMENT && capacity.value !== PlacementValue.ONE_ELEMENT) {
         capacity.setCustomValidity('Выберите: "для 1 гостя"');
       } else if (roomNumber.value === PlacementValue.TWO_ELEMENT && (capacity.value === PlacementValue.THREE_ELEMENT || capacity.value === PlacementValue.EMPTY)) {
