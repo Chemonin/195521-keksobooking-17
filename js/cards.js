@@ -11,7 +11,11 @@
   };
   var cardTemplate = document.querySelector('#card').content.querySelector('.popup');
   var form = document.querySelector('.map__filters-container');
-  var removeCard = function () {
+  window.removeCard = function () {
+    var activePin = document.querySelector('.map__pin--active');
+    if (activePin) {
+      activePin.classList.remove('map__pin--active');
+    }
     var mapCard = document.querySelector('.map__card');
     if (mapCard) {
       mapCard.parentNode.removeChild(mapCard);
@@ -80,7 +84,7 @@
       closeCard();
     });
     document.addEventListener('keydown', onDocumentKeydown);
-    removeCard();
+    window.removeCard();
     form.insertAdjacentElement('beforeBegin', card);
   };
 })();

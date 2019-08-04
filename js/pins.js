@@ -18,7 +18,7 @@
     advertPin.querySelector('img').src = advert.author.avatar;
     advertPin.alt = 'Заголовок объявления';
     advertPin.addEventListener('click', function () {
-      // debugger;
+      advertPin.classList.add('.map__pin--active');
       window.renderCard(advert);
     });
     return advertPin;

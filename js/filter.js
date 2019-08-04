@@ -15,7 +15,16 @@
   var features = document.querySelector('#housing-features').querySelectorAll('input');
 
   var finalizeFilter = function (advertsData) {
+
+    var checkOffer = function () {
+      var offerData = advertsData.filter(function (it) {
+        return Object.keys(it.offer).length !== 0 && it.offer.constructor === Object;
+      });
+      return offerData;
+    };
+
     var selectedByFeatures = function () {
+      // debugger;
       var activeFeatures = [];
       var selectActiveFeatures = function () {
         for (var i = 0; i < features.length; i++) {
@@ -72,6 +81,7 @@
     var roomsFilterData = selectedByRooms();
     var guestsFilterData = selectedByGuests();
     var featuresFilterData = selectedByFeatures();
+    var offerFilterData = checkOffer();
 
     var finalPins = typesFilterData.filter(function (it) {
       return priceFilterData.indexOf(it) !== -1;
@@ -81,6 +91,8 @@
       return guestsFilterData.indexOf(it) !== -1;
     }).filter(function (it) {
       return featuresFilterData.indexOf(it) !== -1;
+    }).filter(function (it) {
+      return offerFilterData.indexOf(it) !== -1;
     });
     return finalPins;
   };

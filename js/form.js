@@ -20,7 +20,31 @@
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
   priceForNight.min = MIN_PRICE.flat;
+  var submit = document.querySelector('.ad-form__submit');
   var form = document.querySelector('.ad-form');
+  var successTemplate = document.querySelector('#success').content.querySelector('.success');
+  var application = document.querySelector('main');
+  var mapOfPins = document.querySelector('.map__pins');
+  var mapFilter = document.querySelector('.map__filters');
+  var showSuccess = function () {
+    form.reset();
+    mapFilter.reset();
+    window.resetService();
+    var successMessage = successTemplate.cloneNode(true);
+    application.appendChild(successMessage);
+    window.removeCard();
+    var pins = mapOfPins.querySelectorAll('button');
+    for (var i = 0; i < pins.length; i++) {
+      if (!pins[i].classList.contains('map__pin--main')) {
+        mapOfPins.removeChild(pins[i]);
+      }
+    }
+  };
+
+  submit.addEventListener('click', function (evt) {
+    evt.preventDefault();
+    window.upload(showSuccess, window.onDownloadError, form);
+  });
 
   form.addEventListener('change', function (evt) {
     if (evt.target === roomNumber || evt.target === capacity) {
