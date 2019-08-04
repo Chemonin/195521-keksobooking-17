@@ -23,15 +23,16 @@
   var submit = document.querySelector('.ad-form__submit');
   var form = document.querySelector('.ad-form');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
-  var application = document.querySelector('main');
+  // var application = document.querySelector('main');
   var mapOfPins = document.querySelector('.map__pins');
   var mapFilter = document.querySelector('.map__filters');
   var showSuccess = function () {
     form.reset();
     mapFilter.reset();
-    window.resetService();
+    // window.resetService();
     var successMessage = successTemplate.cloneNode(true);
-    application.appendChild(successMessage);
+    window.util.messageClose(successMessage);
+    // application.appendChild(successMessage);
     window.removeCard();
     var pins = mapOfPins.querySelectorAll('button');
     for (var i = 0; i < pins.length; i++) {

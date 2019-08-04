@@ -35,7 +35,7 @@
     var xhr = new XMLHttpRequest();
     xhr.addEventListener('load', function () {
       if (xhr.status === LoadStatus.OK) {
-        onSuccess();
+        onSuccess(xhr.response);
       } else {
         onError();
       }

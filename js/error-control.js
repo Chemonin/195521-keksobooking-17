@@ -4,33 +4,36 @@
   // var ESC_KEYCODE = 27;
 
   var errorTemplate = document.querySelector('#error').content.querySelector('.error');
-  var application = document.querySelector('main');
+  // var application = document.querySelector('main');
+  var errorMessage = errorTemplate.cloneNode(true);
 
   window.onDownloadError = function () {
-    var errorMessage = errorTemplate.cloneNode(true);
-    var onDocumentKeydown = function (evt) {
-      window.util.isEscEvent(evt, closeErrorMessage);
-    };
-    // var onDocumentKeydown = function (evt) {
-    //   if (evt.keyCode === ESC_KEYCODE) {
-    //     closeErrorMessage();
-    //   }
-    // };
-    var onDocumentClick = function () {
-      closeErrorMessage();
-    };
-    var closeErrorMessage = function () {
-      application.removeChild(errorMessage);
-      document.removeEventListener('keydown', onDocumentKeydown);
-      document.removeEventListener('click', onDocumentClick);
-    };
-    var errorBtn = errorTemplate.querySelector('.error__button');
+    // var errorMessage = errorTemplate.cloneNode(true);
 
-    document.addEventListener('keydown', onDocumentKeydown);
-    document.addEventListener('click', onDocumentClick);
-    errorBtn.addEventListener('click', function () {
-      closeErrorMessage();
-    });
-    application.appendChild(errorMessage);
+    window.util.messageClose(errorMessage);
+
+    // var onDocumentKeydown = function (evt) {
+    //   window.util.isEscEvent(evt, closeErrorMessage);
+    // };
+    //
+    // var onDocumentClick = function () {
+    //   closeErrorMessage();
+    // };
+    //
+    // var closeErrorMessage = function () {
+    //   window.resetService();
+    //   application.removeChild(errorMessage);
+    //   document.removeEventListener('keydown', onDocumentKeydown);
+    //   document.removeEventListener('click', onDocumentClick);
+    // };
+    //
+    // var errorBtn = errorMessage.querySelector('.error__button');
+    //
+    // document.addEventListener('keydown', onDocumentKeydown);
+    // document.addEventListener('click', onDocumentClick);
+    // errorBtn.addEventListener('click', function () {
+    //   closeErrorMessage();
+    // });
+    // application.appendChild(errorMessage);
   };
 })();

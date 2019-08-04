@@ -22,6 +22,7 @@
   };
 
   window.resetService = function () {
+    // debugger;
     activationFlag = true;
     if (startStateLatch) {
       startState.noticeAddress = getPinX(mainPin) + ', ' + getPinY(mainPin);
