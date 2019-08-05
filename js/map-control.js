@@ -17,7 +17,6 @@
   };
 
   window.resetService();
-
   mainPin.addEventListener('mousedown', function (evt) {
     evt.preventDefault();
     window.activateService();

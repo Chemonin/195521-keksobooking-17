@@ -42,6 +42,9 @@
     }
     updatePins();
   };
+  var onMapFilterChange = window.util.debounce(function () {
+    redrawPins();
+  });
 
   var onMapFilterChange = window.util.debounce(function () {
     redrawPins();

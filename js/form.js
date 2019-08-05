@@ -20,7 +20,6 @@
   var roomNumber = document.querySelector('#room_number');
   var capacity = document.querySelector('#capacity');
   priceForNight.min = MIN_PRICE.flat;
-  var submit = document.querySelector('.ad-form__submit');
   var form = document.querySelector('.ad-form');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
 
@@ -30,7 +29,7 @@
     window.util.messageClose(successMessage);
   };
 
-  submit.addEventListener('click', function (evt) {
+  form.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.upload(showSuccess, window.errorControl, form);
   });
