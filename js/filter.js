@@ -24,7 +24,6 @@
     };
 
     var selectedByFeatures = function () {
-      // debugger;
       var activeFeatures = [];
       var selectActiveFeatures = function () {
         for (var i = 0; i < features.length; i++) {
