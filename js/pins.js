@@ -46,10 +46,6 @@
     redrawPins();
   });
 
-  var onMapFilterChange = window.util.debounce(function () {
-    redrawPins();
-  });
-
   window.pins = {
     render: function (data) {
       pinsData = data;
