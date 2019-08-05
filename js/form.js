@@ -22,6 +22,7 @@
   priceForNight.min = MIN_PRICE.flat;
   var form = document.querySelector('.ad-form');
   var successTemplate = document.querySelector('#success').content.querySelector('.success');
+
   var showSuccess = function () {
     window.resetService();
     var successMessage = successTemplate.cloneNode(true);
