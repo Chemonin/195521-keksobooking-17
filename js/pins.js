@@ -34,13 +34,18 @@
     counter = renderList.length;
     pins.appendChild(fragment);
   };
-  var onMapFilterChange = function () {
+
+  var redrawPins = function () {
     window.removeCard();
     for (var i = 0; i < counter; i++) {
       pins.removeChild(pins.lastChild);
     }
     updatePins();
   };
+
+  var onMapFilterChange = window.util.debounce(function () {
+    redrawPins();
+  });
 
   window.pins = {
     render: function (data) {
