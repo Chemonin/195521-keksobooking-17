@@ -2,7 +2,7 @@
 
 (function () {
   var OFFER_PHOTO_WIDTH = 45;
-  var OFFER_PHOTO_HEIGTH = 40;
+  var OFFER_PHOTO_HEIGHT = 40;
   var houseType = {
     'flat': 'Квартира',
     'bungalo': 'Бунгало',
@@ -48,7 +48,7 @@
           photo.classList.add('popup__photo');
           photo.src = data.offer.photos[i];
           photo.style.width = OFFER_PHOTO_WIDTH + 'px';
-          photo.style.height = OFFER_PHOTO_HEIGTH + 'px';
+          photo.style.height = OFFER_PHOTO_HEIGHT + 'px';
           photosList.appendChild(photo);
         }
       } else {

@@ -2,7 +2,7 @@
 
 (function () {
   var PIN_WIDTH = 50;
-  var PIN_HEIGTH = 70;
+  var PIN_HEIGHT = 70;
   var Y_MIN = 130;
   var Y_MAX = 630;
 
@@ -14,7 +14,7 @@
   var renderPin = function (advert) {
     var advertPin = pinTemplate.cloneNode(true);
     advertPin.style.left = advert.location.x - PIN_WIDTH / 2 + 'px';
-    advertPin.style.top = advert.location.y - PIN_HEIGTH + 'px';
+    advertPin.style.top = advert.location.y - PIN_HEIGHT + 'px';
     advertPin.querySelector('img').src = advert.author.avatar;
     advertPin.alt = 'Заголовок объявления';
     advertPin.addEventListener('click', function () {

@@ -17,10 +17,9 @@
   var finalizeFilter = function (advertsData) {
 
     var checkOffer = function () {
-      var offerData = advertsData.filter(function (it) {
+      return advertsData.filter(function (it) {
         return Object.keys(it.offer).length !== 0 && it.offer.constructor === Object;
       });
-      return offerData;
     };
 
     var selectedByFeatures = function () {
@@ -33,7 +32,7 @@
         }
       };
       selectActiveFeatures();
-      var featuresData = advertsData.filter(function (it) {
+      return advertsData.filter(function (it) {
         var featuresCount = 0;
         for (var i = 0; i < activeFeatures.length; i++) {
           if (it.offer.features.indexOf(activeFeatures[i].value) !== -1) {
@@ -42,37 +41,32 @@
         }
         return featuresCount === activeFeatures.length;
       });
-      return featuresData;
     };
     var selectedByGuests = function () {
-      var guestsData = advertsData.filter(function (it) {
+      return advertsData.filter(function (it) {
         return numberOfGuests.value === ranges[0] || numberOfGuests.value === it.offer.guests.toString();
       });
-      return guestsData;
     };
 
     var selectedByRooms = function () {
-      var roomsData = advertsData.filter(function (it) {
+      return advertsData.filter(function (it) {
         return numberOfRooms.value === ranges[0] || numberOfRooms.value === it.offer.rooms.toString();
       });
-      return roomsData;
     };
 
     var selectedByType = function () {
-      var typesData = advertsData.filter(function (it) {
+      return advertsData.filter(function (it) {
         return it.offer.type === typeOfHouse.value || typeOfHouse.value === ranges[0];
       });
-      return typesData;
     };
 
     var selectByPrice = function () {
-      var pricesData = advertsData.filter(function (it) {
+      return advertsData.filter(function (it) {
         return priceFilter.value === ranges[0]
         || priceFilter.value === ranges[2] && it.offer.price <= HIGH_PRICE && it.offer.price >= LOW_PRICE
         || priceFilter.value === ranges[1] && it.offer.price < LOW_PRICE
         || priceFilter.value === ranges[3] && it.offer.price > HIGH_PRICE;
       });
-      return pricesData;
     };
 
     var typesFilterData = selectedByType();
@@ -82,7 +76,7 @@
     var featuresFilterData = selectedByFeatures();
     var offerFilterData = checkOffer();
 
-    var finalPins = typesFilterData.filter(function (it) {
+    return typesFilterData.filter(function (it) {
       return priceFilterData.indexOf(it) !== -1;
     }).filter(function (it) {
       return roomsFilterData.indexOf(it) !== -1;
@@ -93,7 +87,6 @@
     }).filter(function (it) {
       return offerFilterData.indexOf(it) !== -1;
     });
-    return finalPins;
   };
 
   window.filterPins = function (dataForFilter) {
